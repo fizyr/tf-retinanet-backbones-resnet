@@ -13,6 +13,6 @@ setup(
 
     license='',
     packages=['backbones.resnet'],
-    install_requires = ['tf-keras-retinanet'],
+    install_requires = ['tf-retinanet'],
     zip_safe=False,
 )

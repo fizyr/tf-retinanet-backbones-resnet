@@ -1,8 +1,8 @@
 import tensorflow as tf
-from tf_keras_retinanet.backbone import Backbone
-from tf_keras_retinanet.utils.image import preprocess_input
+from tf_retinanet.backbone import Backbone
+from tf_retinanet.utils.image import preprocess_input
 
-from tf_keras_retinanet.models.retinanet import retinanet
+from tf_retinanet.models.retinanet import retinanet
 
 
 #TODO wait for tf updates (already there)
