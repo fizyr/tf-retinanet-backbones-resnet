@@ -1,6 +1,6 @@
 import tensorflow as tf
 from tf_retinanet.backbone import Backbone
-from tf_retinanet.utils.image import preprocess_input
+from tf_retinanet.utils.image import preprocess_image
 
 from tf_retinanet.models.retinanet import retinanet
 
@@ -46,7 +46,7 @@ class ResNet50Backbone(Backbone):
 	def preprocess_image(self, inputs):
 		""" Takes as input an image and prepares it for being passed through the network.
 		"""
-		return preprocess_input(inputs, mode='caffe') #TODO check if caffe is still the best
+		return preprocess_image(inputs, mode='caffe') #TODO check if caffe is still the best
 
 def resnet50_retinanet(num_classes, inputs=None, modifier=None, **kwargs):
 	# choose default input
