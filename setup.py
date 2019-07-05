@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(
-    name='backbones-resnet',
+    name='tf-retinanet-backbones-resnet',
 
     version='1',
 
@@ -12,7 +12,7 @@ setup(
     author_email='',
 
     license='',
-    packages=['backbones.resnet'],
+    packages=['tf_retinanet_backbones.resnet'],
     install_requires = ['tf-retinanet'],
     zip_safe=False,
 )
