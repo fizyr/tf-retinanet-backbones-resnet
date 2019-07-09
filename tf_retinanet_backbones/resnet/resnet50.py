@@ -6,7 +6,9 @@ from tf_retinanet.models.retinanet import retinanet
 
 
 #TODO wait for tf updates (already there)
+#When tensorflow is updated the following lien should be uncommented.
 #from tensorflow.keras.applications import ResNet50
+#And the lines of the block below should be deleted.
 #########################################################################
 
 from keras_applications import resnet
@@ -57,13 +59,15 @@ def resnet50_retinanet(num_classes, inputs=None, modifier=None, **kwargs):
 			inputs = tf.keras.layers.Input(shape=(None, None, 3))
 
 	# create the resnet backbone
-	resnet = ResNet50(include_top=False,
-					weights='imagenet',
-					input_tensor=inputs,
-					input_shape=None,
-					pooling=None,
-					classes=None,
-					**kwargs)
+	resnet = ResNet50(
+		include_top=False,
+		weights='imagenet',
+		input_tensor=inputs,
+		input_shape=None,
+		pooling=None,
+		classes=None,
+		**kwargs
+	)
 
 	# invoke modifier if given
 	if modifier:
