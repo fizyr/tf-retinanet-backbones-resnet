@@ -1,5 +1,5 @@
 import tensorflow as tf
-from tf_retinanet.backbone import Backbone
+from tf_retinanet.backbones import Backbone
 from tf_retinanet.utils.image import preprocess_image
 
 from tf_retinanet.models.retinanet import retinanet
