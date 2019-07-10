@@ -1,14 +1,14 @@
 import tensorflow as tf
-from tf_retinanet.backbones import Backbone
-from tf_retinanet.utils.image import preprocess_image
 
+from tf_retinanet.backbones        import Backbone
+from tf_retinanet.utils.image      import preprocess_image
 from tf_retinanet.models.retinanet import retinanet
 
 
-#TODO wait for tf updates (already there)
-#When tensorflow is updated the following lien should be uncommented.
-#from tensorflow.keras.applications import ResNet50
-#And the lines of the block below should be deleted.
+# TODO wait for tf updates (already there).
+# When tensorflow is updated the following lien should be uncommented.
+# from tensorflow.keras.applications import ResNet50
+# And the lines of the block below should be deleted.
 #########################################################################
 
 from keras_applications import resnet
@@ -17,13 +17,16 @@ from tensorflow.python.keras.applications import keras_modules_injection
 from tensorflow.python.util.tf_export import keras_export
 
 
-@keras_export('keras.applications.resnet50.ResNet50',
-              'keras.applications.resnet.ResNet50',
-              'keras.applications.ResNet50')
+@keras_export(
+	'keras.applications.resnet50.ResNet50',
+	'keras.applications.resnet.ResNet50',
+	'keras.applications.ResNet50'
+)
 @keras_modules_injection
 def ResNet50(*args, **kwargs):
 	return resnet.ResNet50(*args, **kwargs)
 #########################################################################
+
 
 class ResNet50Backbone(Backbone):
 	""" Describes backbone information and provides utility functions.
@@ -48,17 +51,18 @@ class ResNet50Backbone(Backbone):
 	def preprocess_image(self, inputs):
 		""" Takes as input an image and prepares it for being passed through the network.
 		"""
-		return preprocess_image(inputs, mode='caffe') #TODO check if caffe is still the best
+		# Caffe is the default preprocessing for Resnet in keras_application.
+		return preprocess_image(inputs, mode='caffe')
 
 def resnet50_retinanet(num_classes, inputs=None, modifier=None, **kwargs):
-	# choose default input
+	# Choose default input.
 	if inputs is None:
 		if tf.keras.backend.image_data_format() == 'channels_first':
 			inputs = tf.keras.layers.Input(shape=(3, None, None))
 		else:
 			inputs = tf.keras.layers.Input(shape=(None, None, 3))
 
-	# create the resnet backbone
+	# Create the resnet backbone.
 	resnet = ResNet50(
 		include_top=False,
 		weights='imagenet',
@@ -69,11 +73,11 @@ def resnet50_retinanet(num_classes, inputs=None, modifier=None, **kwargs):
 		**kwargs
 	)
 
-	# invoke modifier if given
+	# Invoke modifier if given.
 	if modifier:
 		resnet = modifier(resnet)
 
-	# get output layers
+	# Get output layers.
 	layer_names = ["conv3_block4_out", "conv4_block6_out", "conv5_block3_out"]
 	layer_outputs = [resnet.get_layer(name).output for name in layer_names]
 
