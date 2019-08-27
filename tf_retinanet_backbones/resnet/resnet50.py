@@ -4,40 +4,19 @@ from tf_retinanet.backbones        import Backbone
 from tf_retinanet.utils.image      import preprocess_image
 from tf_retinanet.models.retinanet import retinanet
 
-
-# TODO wait for tf updates (already there).
-# When tensorflow is updated the following lien should be uncommented.
-# from tensorflow.keras.applications import ResNet50
-# And the lines of the block below should be deleted.
-#########################################################################
-
-from keras_applications import resnet
-
-from tensorflow.python.keras.applications import keras_modules_injection
-from tensorflow.python.util.tf_export import keras_export
-
-
-@keras_export(
-	'keras.applications.resnet50.ResNet50',
-	'keras.applications.resnet.ResNet50',
-	'keras.applications.ResNet50'
-)
-@keras_modules_injection
-def ResNet50(*args, **kwargs):
-	return resnet.ResNet50(*args, **kwargs)
-#########################################################################
+from tensorflow.keras.applications import ResNet50
 
 
 class ResNet50Backbone(Backbone):
 	""" Describes backbone information and provides utility functions.
 	"""
-	def __init__(self, backbone):
-		super(ResNet50Backbone, self).__init__(backbone)
+	def __init__(self, config):
+		super(ResNet50Backbone, self).__init__(config)
 
 	def retinanet(self, *args, **kwargs):
 		""" Returns a retinanet model using the correct backbone.
 		"""
-		return resnet50_retinanet(*args, **kwargs)
+		return resnet50_retinanet(*args, weights=self.weights, modifier=self.modifier, **kwargs)
 
 	def validate(self):
 		""" Checks whether the backbone string is correct.
@@ -54,7 +33,7 @@ class ResNet50Backbone(Backbone):
 		# Caffe is the default preprocessing for Resnet in keras_application.
 		return preprocess_image(inputs, mode='caffe')
 
-def resnet50_retinanet(num_classes, inputs=None, modifier=None, **kwargs):
+def resnet50_retinanet(num_classes, inputs=None, modifier=None, weights='imagenet', **kwargs):
 	# Choose default input.
 	if inputs is None:
 		if tf.keras.backend.image_data_format() == 'channels_first':
@@ -65,7 +44,7 @@ def resnet50_retinanet(num_classes, inputs=None, modifier=None, **kwargs):
 	# Create the resnet backbone.
 	resnet = ResNet50(
 		include_top=False,
-		weights='imagenet',
+		weights=weights,
 		input_tensor=inputs,
 		input_shape=None,
 		pooling=None,
