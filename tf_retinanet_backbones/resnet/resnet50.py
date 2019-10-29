@@ -48,7 +48,7 @@ class ResNet50Backbone(Backbone):
 		# Caffe is the default preprocessing for Resnet in keras_application.
 		return preprocess_image(inputs, mode='caffe')
 
-def resnet50_retinanet(num_classes, inputs=None, modifier=None, weights='imagenet', **kwargs):
+def resnet50_retinanet(submodels, inputs=None, modifier=None, weights='imagenet', **kwargs):
 	# Choose default input.
 	if inputs is None:
 		if tf.keras.backend.image_data_format() == 'channels_first':
@@ -75,4 +75,4 @@ def resnet50_retinanet(num_classes, inputs=None, modifier=None, weights='imagene
 	layer_names = ["conv3_block4_out", "conv4_block6_out", "conv5_block3_out"]
 	layer_outputs = [resnet.get_layer(name).output for name in layer_names]
 
-	return retinanet(inputs, layer_outputs, num_classes)
+	return retinanet(inputs, layer_outputs, submodels, **kwargs)
