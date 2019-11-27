@@ -25,6 +25,7 @@ from tensorflow.keras.applications import ResNet50
 class ResNet50Backbone(Backbone):
 	""" Describes backbone information and provides utility functions.
 	"""
+
 	def __init__(self, config):
 		super(ResNet50Backbone, self).__init__(config)
 
@@ -49,6 +50,15 @@ class ResNet50Backbone(Backbone):
 		return preprocess_image(inputs, mode='caffe')
 
 def resnet50_retinanet(submodels, inputs=None, modifier=None, weights='imagenet', **kwargs):
+	""" Creates a retinanet model using the ResNet50 backbone.
+	Arguments
+		submodels: RetinaNetSubmodels.
+		inputs:    The inputs to the network (defaults to a Tensor of shape (None, None, 3)).
+		modifier:  A function handler which can modify the backbone before using it in retinanet (this can be used to freeze backbone layers for example).
+		weights:   Weights for the backbone (default is imagenet weights).
+	Returns:
+		RetinaNet model with ResNet50 backbone.
+	"""
 	# Choose default input.
 	if inputs is None:
 		if tf.keras.backend.image_data_format() == 'channels_first':
