@@ -17,10 +17,22 @@ from .resnet50 import ResNet50Backbone
 
 
 def set_defaults(config):
+	""" Sets the default values in the backbone configuration dict.
+	# Arguments
+		config: backbone configuration dict.
+	# Returns
+		config: backbone configuration dict, merged with default values.
+	"""
 	if 'type' not in config:
 		config['type'] = 'resnet50'
 	return config
 
 
 def from_config(config, **kwargs):
+	""" Create a ResNet backbone from a backbone configuration dict.
+	# Arguments
+		config: backbone configuration dict.
+	# Returns
+		backbone: ResNet backbone for tf-retinanet.
+	"""
 	return ResNet50Backbone(set_defaults(config), **kwargs)
