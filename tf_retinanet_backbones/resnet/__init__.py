@@ -14,18 +14,10 @@ limitations under the License.
 """
 
 from .resnet50 import ResNet50Backbone
+from tf_retinanet.utils.config import set_defaults
 
 
-def set_defaults(config):
-	""" Sets the default values in the backbone configuration dict.
-	# Arguments
-		config: backbone configuration dict.
-	# Returns
-		config: backbone configuration dict, merged with default values.
-	"""
-	if 'type' not in config:
-		config['type'] = 'resnet50'
-	return config
+default_config = {'type': 'resnet50'}
 
 
 def from_config(config, **kwargs):
@@ -35,4 +27,4 @@ def from_config(config, **kwargs):
 	# Returns
 		backbone: ResNet backbone for tf-retinanet.
 	"""
-	return ResNet50Backbone(set_defaults(config), **kwargs)
+	return ResNet50Backbone(set_defaults(config, default_config), **kwargs)
