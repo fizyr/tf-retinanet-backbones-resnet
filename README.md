@@ -1,7 +1,7 @@
 # TF-Retinanet-Backbones-Resnet
 
 Wrapper around Resnet implementation present in tf.keras, to make it compatible as backbone of
-[tf-retinanet](https://github.com/fizyr-private/tf-retinanet "tf-retinanet").
+[tf-retinanet](https://github.com/fizyr/tf-retinanet "tf-retinanet").
 
 This backbone is *not* the same used in [keras-retinanet](https://github.com/fizyr/keras-retinanet "keras-retinanet"),
 so it *cannot* be used for porting networks from keras to tensorflow.
@@ -10,7 +10,7 @@ so it *cannot* be used for porting networks from keras to tensorflow.
 Install `tf-retinanet`:
 
 ```
-git clone https://github.com/fizyr-private/tf-retinanet.git
+git clone https://github.com/fizyr/tf-retinanet.git
 cd tf-retinanet
 python setup.py install --user
 cd ..
@@ -19,7 +19,7 @@ cd ..
 Install `tf-retinanet-backbones-resnet`:
 
 ```
-git clone https://github.com/fizyr-private/tf-retinanet-backbones-resnet.git
+git clone https://github.com/fizyr/tf-retinanet-backbones-resnet.git
 cd tf-retinanet-backbones-resnet
 python setup.py install --user
 cd ..
