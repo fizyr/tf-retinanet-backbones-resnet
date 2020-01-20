@@ -77,6 +77,11 @@ def resnet50_retinanet(submodels, inputs=None, modifier=None, weights='imagenet'
 		**kwargs
 	)
 
+	# Freeze the BatchNormalization layers.
+	for layer in resnet.layers:
+		if str(layer.__class__) == "<class 'tensorflow.python.keras.layers.normalization.BatchNormalization'>": # TODO remove this spaghetti code.
+			layer.trainable = False
+
 	# Invoke modifier if given.
 	if modifier:
 		resnet = modifier(resnet)
