@@ -13,7 +13,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
-from typing import List, Callable
+from typing import List, Callable, Tuple
 
 import numpy as np
 import tensorflow as tf
@@ -44,7 +44,7 @@ class ResNet50Backbone(Backbone):
 
 
 def resnet50_retinanet(
-	submodels: List[tf.keras.Model],
+	submodels: List[Tuple[str, tf.keras.Model]],
 	inputs   : tf.keras.layers.Input                      = None,
 	modifier : Callable[[tf.keras.Model], tf.keras.Model] = None,
 	weights  : str                                        = 'imagenet',
