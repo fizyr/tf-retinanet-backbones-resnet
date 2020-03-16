@@ -77,6 +77,12 @@ def resnet50_retinanet(
 		**kwargs
 	)
 
+	# Disable training on the batch normalization layers.
+	for layer in resnet.layers:
+		# TODO: replace this with an `isinstance`: https://github.com/tensorflow/tensorflow/issues/37635
+		if 'BatchNormalization' in str(layer):
+			layer.trainable = False
+
 	# Invoke modifier if given.
 	if modifier:
 		resnet = modifier(resnet)
